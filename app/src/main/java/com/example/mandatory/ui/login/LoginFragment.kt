@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mandatory.R
@@ -20,6 +21,7 @@ class LoginFragment : Fragment() {
 
     private val binding get() = _binding!!
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val viewModel: LoginViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,15 +54,16 @@ class LoginFragment : Fragment() {
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d("APPLE", "createUserWithEmail:success")
+                        Log.d("Line 57 message or error", "createUserWithEmail:success")
                         val user = auth.currentUser
                         findNavController().navigate(R.id.action_navigation_logout_to_navigation_my_items, null)
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w("APPLE", "createUserWithEmail:failure", task.exception)
+                        Log.w("Line 62 message or error", "createUserWithEmail:failure", task.exception)
                         Toast.makeText(requireContext(), "Fejl", Toast.LENGTH_SHORT).show()
                     }
                 }
+            viewModel.email.value = email
         }
 
         binding.buttonSignup.setOnClickListener {
@@ -89,6 +92,7 @@ class LoginFragment : Fragment() {
                         //updateUI(null)
                     }
                 }
+            viewModel.email.value = email
         }
     }
 

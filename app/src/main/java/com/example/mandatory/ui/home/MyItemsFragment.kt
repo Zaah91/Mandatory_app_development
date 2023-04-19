@@ -1,13 +1,16 @@
 package com.example.mandatory.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.mandatory.databinding.FragmentMyItemsBinding
+import com.example.mandatory.ui.login.LoginViewModel
 
 class MyItemsFragment : Fragment() {
 
@@ -16,6 +19,7 @@ class MyItemsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val viewModel: LoginViewModel by activityViewModels() //tager email med.
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,9 @@ class MyItemsFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+        viewModel.email.observe(viewLifecycleOwner)
+        { email -> email } // gemmer mail i baggrunden
+        Log.d("Email logget ind", viewModel.email.value.toString())
         return root
     }
 

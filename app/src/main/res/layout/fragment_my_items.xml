@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.MyItemsFragment">
 
+    <Spinner
+        android:id="@+id/my_items_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/text_my_items"
         android:layout_width="match_parent"
