@@ -1,5 +1,6 @@
 package com.example.mandatory.ui.all_items
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import com.example.mandatory.databinding.FragmentAllItemsBinding
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mandatory.R
+import com.example.mandatory.databinding.FragmentAllItemsBinding
 import com.example.mandatory.ui.login.LoginViewModel
 
 class AllItemsFragment : Fragment() {
@@ -23,6 +26,7 @@ class AllItemsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel: LoginViewModel by activityViewModels() //tager email med.
+    private val itemsViewModel: ItemsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +39,42 @@ class AllItemsFragment : Fragment() {
         _binding = FragmentAllItemsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textAllItems
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
+        /*dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        }
+        }*/
+
         viewModel.email.observe(viewLifecycleOwner)
         { email -> email }
+
+        itemsViewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
+            binding.progressbar.visibility = View.GONE
+            binding.recyclerView.visibility = if (items == null) View.GONE else View.VISIBLE
+            if (items != null) {
+                val adapter = ItemsAdapter(items) { position ->
+                    /*val action =
+                        //FirstFragmentDirections.actionFirstFragmentToSecondFragment(position)
+                    findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)*/
+                }
+                // binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+                var columns = 1
+                val currentOrientation = this.resources.configuration.orientation
+                if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    columns = 1
+                } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+                    columns = 1
+                }
+                binding.recyclerView.layoutManager = GridLayoutManager(this.context, columns)
+
+                binding.recyclerView.adapter = adapter
+            }
+        }
+
+        itemsViewModel.errorMessageLiveData.observe(viewLifecycleOwner) { errorMessage ->
+            /*binding.textviewMessage.text =*/ errorMessage
+        }
+
+        itemsViewModel.reload()
+
 
         return root
     }
