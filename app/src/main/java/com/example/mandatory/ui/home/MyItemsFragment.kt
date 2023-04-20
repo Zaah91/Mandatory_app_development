@@ -2,16 +2,15 @@ package com.example.mandatory.ui.home
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.mandatory.databinding.FragmentAllItemsBinding
+import com.example.mandatory.R
 import com.example.mandatory.databinding.FragmentMyItemsBinding
 import com.example.mandatory.ui.all_items.AllItemsViewModel
 import com.example.mandatory.ui.all_items.ItemsAdapter
@@ -34,15 +33,12 @@ class MyItemsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         val dashboardViewModel =
             ViewModelProvider(this).get(AllItemsViewModel::class.java)
 
         _binding = FragmentMyItemsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        /*dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }*/
 
         viewModel.email.observe(viewLifecycleOwner)
         { email -> email }

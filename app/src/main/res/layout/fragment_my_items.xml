@@ -9,7 +9,10 @@
     <Spinner
         android:id="@+id/my_items_spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/progressbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressbar"

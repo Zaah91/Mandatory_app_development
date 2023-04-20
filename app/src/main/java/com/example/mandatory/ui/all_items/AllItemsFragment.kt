@@ -75,6 +75,23 @@ class AllItemsFragment : Fragment() {
 
         itemsViewModel.reload()
 
+        binding.buttonSort.setOnClickListener {
+            when (binding.spinnerSorting.selectedItemPosition) {
+                0 -> itemsViewModel.sortByDescription()
+                1 -> itemsViewModel.sortByDescriptionDescending()
+                2 -> itemsViewModel.sortByPrice()
+                3 -> itemsViewModel.sortByPriceDescending()
+            }
+        }
+
+        binding.buttonFilter.setOnClickListener {
+            val description = binding.edittextFilterDescription.text.toString().trim()
+            /* if (title.isBlank()) {
+                 binding.edittextFilterTitle.error = "No title"
+                 return@setOnClickListener
+             }*/
+            itemsViewModel.filterByTitle(description)
+        }
 
         return root
     }
