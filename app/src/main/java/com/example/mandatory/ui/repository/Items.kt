@@ -5,7 +5,7 @@ import java.text.DateFormat
 
 fun humanDate(timeInSeconds: Long): String {
     val formatter = DateFormat.getDateInstance()
-    return formatter.format(timeInSeconds * 1000L)
+    return formatter.format(timeInSeconds * 1000L) // Long format
 }
 
 

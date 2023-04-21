@@ -3,6 +3,7 @@
     <string name="title_my_items">My items</string>
     <string name="title_all_items">View all items</string>
     <string name="title_logout">Logout</string>
+    <string name="create_button">Create new item</string>
 
     <array name="sortings">
         <item>Description ascending</item>

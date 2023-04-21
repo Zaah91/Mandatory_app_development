@@ -11,7 +11,6 @@ class AllItemsViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
         value = "This is 'all items' Fragment"
     }
-    // val text: LiveData<String> = _text
 }
 
 class ItemsViewModel : ViewModel() {
@@ -59,4 +58,5 @@ class ItemsViewModel : ViewModel() {
     fun filterByTitle(description: String) {
         repository.filterByDescription(description)
     }
+
 }

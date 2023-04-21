@@ -66,7 +66,7 @@ class ItemsRepository {
                 } else {
                     val message = response.code().toString() + " " + response.message()
                     errorMessageLiveData.postValue(message)
-                    Log.d("Line 68 errorcode", message)
+                    Log.d("Line 69 errorcode", message)
                 }
             }
 

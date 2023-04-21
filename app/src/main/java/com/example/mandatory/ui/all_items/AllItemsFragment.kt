@@ -86,10 +86,6 @@ class AllItemsFragment : Fragment() {
 
         binding.buttonFilter.setOnClickListener {
             val description = binding.edittextFilterDescription.text.toString().trim()
-            /* if (title.isBlank()) {
-                 binding.edittextFilterTitle.error = "No title"
-                 return@setOnClickListener
-             }*/
             itemsViewModel.filterByTitle(description)
         }
 
