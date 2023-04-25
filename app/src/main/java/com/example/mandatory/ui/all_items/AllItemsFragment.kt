@@ -2,11 +2,15 @@ package com.example.mandatory.ui.all_items
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mandatory.R
 import com.example.mandatory.databinding.FragmentAllItemsBinding
 import com.example.mandatory.ui.login.LoginViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class AllItemsFragment : Fragment() {
 
@@ -39,9 +44,7 @@ class AllItemsFragment : Fragment() {
         _binding = FragmentAllItemsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        /*dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }*/
+
 
         viewModel.email.observe(viewLifecycleOwner)
         { email -> email }
@@ -88,6 +91,17 @@ class AllItemsFragment : Fragment() {
             val description = binding.edittextFilterDescription.text.toString().trim()
             itemsViewModel.filterByTitle(description)
         }
+
+        binding.newItemButton.setOnClickListener {
+
+        }
+
+
+        binding.swiperefresh.setOnRefreshListener {
+            itemsViewModel.reload()
+        }
+
+
 
         return root
     }

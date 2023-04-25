@@ -12,7 +12,9 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.mandatory.R
 import com.example.mandatory.databinding.FragmentAllItemsBinding
 import com.example.mandatory.databinding.FragmentMyItemsBinding
@@ -23,6 +25,8 @@ import com.example.mandatory.ui.login.LoginViewModel
 import com.example.mandatory.ui.repository.Items
 import com.example.mandatory.ui.repository.humanDate
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.text.DateFormat
 import java.time.format.DateTimeFormatter
 
@@ -86,16 +90,23 @@ class MyItemsFragment : Fragment() {
                 }
             }
         }
+/*
+        _binding = FragmentMyItemsBinding.inflate(inflater, container, false)
 
+        if (Firebase.auth.currentUser?.email == salesItems.sellerEmail)
+            binding.delete_button.visibility = View.VISIBLE
+        else binding.buttonDelete.visibility = View.GONE
+        binding.delete_button.setOnClickListener {
+            salesViewModel.delete(salesItems.id)
+            findNavController().popBackStack()
+        }
+*/
 
         val dashboardViewModel =
             ViewModelProvider(this).get(AllItemsViewModel::class.java)
 
         _binding = FragmentMyItemsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        viewModel.email.observe(viewLifecycleOwner)
-        { email -> email }
 
         itemsViewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
             binding.progressbar.visibility = View.GONE

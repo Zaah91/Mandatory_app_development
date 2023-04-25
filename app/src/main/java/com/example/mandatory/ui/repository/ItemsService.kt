@@ -17,17 +17,3 @@ interface ItemsService {
     fun deleteItem(@Path("id") id: Int): Call<Items>
 
 }
-
-interface MyitemsService {
-    @GET("salesItems")
-    fun getAllItems(@Query("email") email: String): Call<List<Items>>
-
-    @GET("SalesItems/{itemId}")
-    fun getItemById(@Path("itemId") itemId: Int): Call<Items>
-
-    @POST("SalesItems")
-    fun saveItem(@Body items: Items): Call<Items>
-
-    @DELETE("SalesItems/{id}")
-    fun deleteItem(@Path("id") id: Int): Call<Items>
-}

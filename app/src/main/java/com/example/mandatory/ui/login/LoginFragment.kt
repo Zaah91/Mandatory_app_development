@@ -36,9 +36,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSignup.setOnClickListener{
-            //findNavController().navigate(R.id.action_navigation_logout_to_navigation_my_items, null)
-        }
         binding.buttonLogin.setOnClickListener {
             val email = binding.emailInput.text.trim().toString()
             if (email.isEmpty()) {
@@ -56,7 +53,7 @@ class LoginFragment : Fragment() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("Line 57 message or error", "createUserWithEmail:success")
                         val user = auth.currentUser
-                        findNavController().navigate(R.id.action_navigation_logout_to_navigation_my_items, null)
+                        findNavController().navigate(R.id.action_navigation_login_to_navigation_view_all, null)
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("Line 62 message or error", "createUserWithEmail:failure", task.exception)
@@ -84,7 +81,7 @@ class LoginFragment : Fragment() {
                         Log.d("APPLE", "createUserWithEmail:success")
                         val user = auth.currentUser
                         //updateUI(user)
-                        findNavController().navigate(R.id.action_navigation_logout_to_navigation_my_items, null)
+                        findNavController().navigate(R.id.action_navigation_login_to_navigation_view_all, null)
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("APPLE", "createUserWithEmail:failure", task.exception)

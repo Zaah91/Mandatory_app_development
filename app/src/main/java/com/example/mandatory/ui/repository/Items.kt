@@ -8,7 +8,6 @@ fun humanDate(timeInSeconds: Long): String {
     return formatter.format(timeInSeconds * 1000L) // Long format
 }
 
-
 data class Items(val id: Int, val description: String, val price: Int, val sellerEmail: String, val sellerPhone: String, val time: Long, val pictureUrl: String)  : Serializable {
     constructor(description: String, price: Int, sellerEmail: String, sellerPhone: String, time: Long, pictureUrl: String) : this(-1, description, price, sellerEmail, sellerPhone, time, pictureUrl)
 

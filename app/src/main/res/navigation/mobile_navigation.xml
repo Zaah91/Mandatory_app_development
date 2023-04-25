@@ -9,13 +9,21 @@
         android:id="@+id/navigation_my_items"
         android:name="com.example.mandatory.ui.home.MyItemsFragment"
         android:label="@string/title_my_items"
-        tools:layout="@layout/fragment_my_items" />
+        tools:layout="@layout/fragment_my_items" >
+        <action
+            android:id="@+id/action_navigation_my_items_to_navigation_view_all"
+            app:destination="@id/navigation_view_all" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_view_all"
         android:name="com.example.mandatory.ui.all_items.AllItemsFragment"
         android:label="@string/title_all_items"
-        tools:layout="@layout/fragment_all_items" />
+        tools:layout="@layout/fragment_all_items" >
+        <action
+            android:id="@+id/action_navigation_view_all_to_navigation_my_items"
+            app:destination="@id/navigation_my_items" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_login"
@@ -23,7 +31,7 @@
         android:label="@string/title_logout"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_navigation_logout_to_navigation_my_items"
-            app:destination="@id/navigation_my_items" />
+            android:id="@+id/action_navigation_login_to_navigation_view_all"
+            app:destination="@id/navigation_view_all" />
     </fragment>
 </navigation>

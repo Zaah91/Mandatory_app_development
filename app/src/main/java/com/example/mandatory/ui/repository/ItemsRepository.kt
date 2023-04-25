@@ -2,11 +2,8 @@ package com.example.mandatory.ui.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.mandatory.ui.repository.Items
-import com.google.android.gms.common.api.Response
 import retrofit2.Callback
 import retrofit2.Retrofit
-import retrofit2.Call
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ItemsRepository {
