@@ -130,8 +130,8 @@ class AllItemsFragment : Fragment() {
         layout.addView(priceInputField)
 
         val sellerPhoneInputField = EditText(requireContext())
-        sellerPhoneInputField.hint = "phone numbar"
-        sellerPhoneInputField.inputType = InputType.TYPE_CLASS_TEXT
+        sellerPhoneInputField.hint = "phone number"
+        sellerPhoneInputField.inputType = InputType.TYPE_CLASS_PHONE
         layout.addView(sellerPhoneInputField)
 
         val pictureUrlInputField = EditText(requireContext())
@@ -158,7 +158,13 @@ class AllItemsFragment : Fragment() {
                 )
                     .show()
                 else -> {
-                    val Items = Items(description, priceStr.toInt(), Firebase.auth.currentUser?.email?:"Cat@gmail.com", sellerPhone, System.currentTimeMillis()/1000, pictureUrl)
+                    val Items =
+                        Items(description,
+                            priceStr.toInt(),
+                            Firebase.auth.currentUser?.email?: viewModel.email.observe(viewLifecycleOwner){ email -> email }.toString(),
+                            sellerPhone,
+                            System.currentTimeMillis()/1000,
+                            pictureUrl)
                     itemsViewModel.add(Items)
                 }
             }
