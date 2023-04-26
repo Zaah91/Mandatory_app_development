@@ -18,10 +18,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.mandatory.MainActivity
 import com.example.mandatory.R
 import com.example.mandatory.databinding.FragmentAllItemsBinding
+import com.example.mandatory.ui.home.SecondFragmentDirections
 import com.example.mandatory.ui.login.LoginViewModel
+import com.example.mandatory.ui.repository.Items
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class AllItemsFragment : Fragment() {
 
@@ -54,9 +59,9 @@ class AllItemsFragment : Fragment() {
             binding.recyclerView.visibility = if (items == null) View.GONE else View.VISIBLE
             if (items != null) {
                 val adapter = ItemsAdapter(items) { position ->
-                    /*val action =
-                        //FirstFragmentDirections.actionFirstFragmentToSecondFragment(position)
-                    findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)*/
+                    val action =
+                        //SecondFragmentDirections.actionNavigationMyItemsToNavigationViewAll(position)
+                    findNavController().navigate(/*action*/ R.id.action_navigation_view_all_to_navigation_my_items)
                 }
                 // binding.recyclerView.layoutManager = LinearLayoutManager(activity)
                 var columns = 1
@@ -93,7 +98,7 @@ class AllItemsFragment : Fragment() {
         }
 
         binding.newItemButton.setOnClickListener {
-
+            showDialog()
         }
 
 
@@ -104,6 +109,62 @@ class AllItemsFragment : Fragment() {
 
 
         return root
+    }
+
+    private fun showDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("New item")
+
+        val layout = LinearLayout(requireContext())
+        layout.orientation = LinearLayout.VERTICAL
+
+        val descriptionInputField = EditText(requireContext())
+        descriptionInputField.hint = "Description"
+        descriptionInputField.inputType = InputType.TYPE_CLASS_TEXT
+        layout.addView(descriptionInputField)
+
+        val priceInputField = EditText(requireContext())
+        priceInputField.hint = "Price"
+        priceInputField.inputType =
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        layout.addView(priceInputField)
+
+        val sellerPhoneInputField = EditText(requireContext())
+        sellerPhoneInputField.hint = "phone numbar"
+        sellerPhoneInputField.inputType = InputType.TYPE_CLASS_TEXT
+        layout.addView(sellerPhoneInputField)
+
+        val pictureUrlInputField = EditText(requireContext())
+        pictureUrlInputField.hint = "pictureUrl"
+        pictureUrlInputField.inputType = InputType.TYPE_CLASS_TEXT
+        layout.addView(pictureUrlInputField)
+
+        builder.setView(layout)
+
+        builder.setPositiveButton("OK") { dialog, which ->
+            val description = descriptionInputField.text.toString().trim()
+            val priceStr = priceInputField.text.toString().trim()
+            val sellerPhone = sellerPhoneInputField.text.toString().trim()
+            val pictureUrl = pictureUrlInputField.text.toString().trim()
+            when {
+                description.isEmpty() ->
+                    Snackbar.make(binding.root, "No description", Snackbar.LENGTH_LONG).show()
+                description.isEmpty() -> Snackbar.make(binding.root, "No description", Snackbar.LENGTH_LONG)
+                    .show()
+                priceStr.isEmpty() -> Snackbar.make(
+                    binding.root,
+                    "No price",
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()
+                else -> {
+                    val Items = Items(description, priceStr.toInt(), Firebase.auth.currentUser?.email?:"Cat@gmail.com", sellerPhone, System.currentTimeMillis()/1000, pictureUrl)
+                    itemsViewModel.add(Items)
+                }
+            }
+        }
+        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        builder.show()
     }
 
     override fun onDestroyView() {

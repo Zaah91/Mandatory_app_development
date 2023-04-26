@@ -8,14 +8,17 @@
     <fragment
         android:id="@+id/navigation_second_fragment"
         android:name="com.example.mandatory.ui.home.SecondFragment"
-        android:label="@string/title_my_items"
-        tools:layout="@layout/fragment_second" >
+        android:label="@string/title_second_fragment"
+        tools:layout="@layout/fragment_second">
         <action
             android:id="@+id/action_navigation_my_items_to_navigation_view_all"
             app:destination="@id/navigation_view_all" />
         <argument
-        android:name="position"
-        app:argType="integer" />
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_navigation_second_fragment_to_navigation_login"
+            app:destination="@id/navigation_login" />
     </fragment>
 
     <fragment
@@ -26,6 +29,9 @@
         <action
             android:id="@+id/action_navigation_view_all_to_navigation_my_items"
             app:destination="@id/navigation_second_fragment" />
+        <action
+            android:id="@+id/action_navigation_view_all_to_navigation_login"
+            app:destination="@id/navigation_login" />
 
     </fragment>
 
