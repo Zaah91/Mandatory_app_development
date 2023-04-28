@@ -33,7 +33,7 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //viewModel.email.observe(viewLifecycleOwner) { email -> email }
+        viewModel.email.observe(viewLifecycleOwner) { email -> email }
 
         val bundle = requireArguments()
         val secondFragmentArgs: SecondFragmentArgs = SecondFragmentArgs.fromBundle(bundle)
@@ -53,9 +53,19 @@ class SecondFragment : Fragment() {
         binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
-        if (Firebase.auth.currentUser?.email == item.sellerEmail)
+
+        Log.d("Firebase:" , Firebase.auth.currentUser?.email!!)
+        Log.d("seller email", item.toString())
+
+        if (Firebase.auth.currentUser?.email == item.sellerEmail) { // virker ikke korrekt
+
             binding.buttonDelete.visibility = View.VISIBLE
-        else binding.buttonDelete.visibility = View.GONE
+            binding.buttonUpdate.visibility = View.VISIBLE
+        } else {
+            binding.buttonDelete.visibility = View.GONE
+            binding.buttonUpdate.visibility = View.GONE
+        }
+
         binding.buttonDelete.setOnClickListener {
             itemsViewModel.delete(item.id)
             findNavController().popBackStack()
@@ -64,9 +74,9 @@ class SecondFragment : Fragment() {
         binding.buttonUpdate.setOnClickListener {
             val description = binding.editTextDescription.text.toString().trim()
             val price = binding.editTextPrice.text.toString().trim().toInt()
-            val sellerEmail = viewModel.email.observe(viewLifecycleOwner) { email -> email }.toString()
+            val sellerEmail = viewModel.email.value.toString()
             val sellerPhone = binding.editTextPhone.text.toString().trim()
-            val time = System.currentTimeMillis()/1000
+            val time = System.currentTimeMillis() / 1000
             val pictureUrl = binding.editTextPictureUrl.text.toString().trim()
             val updatedSalesItem = Items(
                 item.id,
@@ -78,7 +88,7 @@ class SecondFragment : Fragment() {
                 pictureUrl
             )
             Log.d("APPLE", "update $updatedSalesItem")
-            //itemsViewModel.update(updatedSalesItem)
+            itemsViewModel.update(updatedSalesItem)
             findNavController().popBackStack()
         }
     }

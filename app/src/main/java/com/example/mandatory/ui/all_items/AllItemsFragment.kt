@@ -50,24 +50,28 @@ class AllItemsFragment : Fragment() {
         val root: View = binding.root
 
 
+        viewModel.email.observe(viewLifecycleOwner) { email -> email }
 
-        viewModel.email.observe(viewLifecycleOwner)
-        { email -> email }
+        if (viewModel.email.value == null){
+            binding.newItemButton.visibility = View.GONE
+        } else {
+            binding.newItemButton.visibility = View.VISIBLE
+        }
 
         itemsViewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
             binding.progressbar.visibility = View.GONE
             binding.recyclerView.visibility = if (items == null) View.GONE else View.VISIBLE
             if (items != null) {
                 val adapter = ItemsAdapter(items) { position ->
-                    val action =
-                        //SecondFragmentDirections.actionNavigationMyItemsToNavigationViewAll(position)
-                    findNavController().navigate(/*action*/ R.id.action_navigation_view_all_to_navigation_my_items)
+                    //val action =
+                        //AllItemsFragmentDirections.actionNavigationViewAllToNavigationSecondFragment(position)
+                    findNavController().navigate(/*action*/ R.id.action_navigation_view_all_to_navigation_second_fragment)
                 }
                 // binding.recyclerView.layoutManager = LinearLayoutManager(activity)
                 var columns = 1
                 val currentOrientation = this.resources.configuration.orientation
                 if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    columns = 1
+                    columns = 2
                 } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
                     columns = 1
                 }
@@ -161,7 +165,7 @@ class AllItemsFragment : Fragment() {
                     val Items =
                         Items(description,
                             priceStr.toInt(),
-                            Firebase.auth.currentUser?.email?: viewModel.email.observe(viewLifecycleOwner){ email -> email }.toString(),
+                            Firebase.auth.currentUser?.email.toString(),
                             sellerPhone,
                             System.currentTimeMillis()/1000,
                             pictureUrl)

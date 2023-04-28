@@ -16,4 +16,7 @@ interface ItemsService {
     @DELETE("SalesItems/{id}")
     fun deleteItem(@Path("id") id: Int): Call<Items>
 
+    @PUT("SalesItems/{id}")
+    fun updateItem(@Path("id") id: Int, @Body item: Items): Call<Items>
+
 }

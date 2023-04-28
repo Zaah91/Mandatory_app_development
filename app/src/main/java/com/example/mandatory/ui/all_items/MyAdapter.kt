@@ -39,7 +39,7 @@ class ItemsAdapter<T>(
         }
 
         override fun onClick(view: View) {
-            val position = adapterPosition
+            val position = bindingAdapterPosition
             onItemClicked(position)
         }
     }

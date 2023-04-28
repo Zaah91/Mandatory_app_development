@@ -11,11 +11,12 @@
         android:label="@string/title_second_fragment"
         tools:layout="@layout/fragment_second">
         <action
-            android:id="@+id/action_navigation_my_items_to_navigation_view_all"
+            android:id="@+id/action_navigation_second_fragment_to_navigation_view_all"
             app:destination="@id/navigation_view_all" />
         <argument
             android:name="position"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0"/>
         <action
             android:id="@+id/action_navigation_second_fragment_to_navigation_login"
             app:destination="@id/navigation_login" />
@@ -26,8 +27,12 @@
         android:name="com.example.mandatory.ui.all_items.AllItemsFragment"
         android:label="@string/title_all_items"
         tools:layout="@layout/fragment_all_items" >
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0"/>
         <action
-            android:id="@+id/action_navigation_view_all_to_navigation_my_items"
+            android:id="@+id/action_navigation_view_all_to_navigation_second_fragment"
             app:destination="@id/navigation_second_fragment" />
         <action
             android:id="@+id/action_navigation_view_all_to_navigation_login"

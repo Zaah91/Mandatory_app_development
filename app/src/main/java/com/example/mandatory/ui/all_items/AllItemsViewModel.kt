@@ -35,6 +35,10 @@ class ItemsViewModel : ViewModel() {
         repository.add(items)
     }
 
+    fun update(items: Items){
+        repository.update(items)
+    }
+
     fun delete(id: Int) {
         repository.delete(id)
     }

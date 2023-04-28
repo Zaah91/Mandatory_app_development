@@ -2,7 +2,9 @@ package com.example.mandatory.ui.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,10 +28,7 @@ class ItemsRepository {
 
     fun getItems() {
         itemsService.getAllItems().enqueue(object : Callback<List<Items>> {
-            override fun onResponse(
-                call: retrofit2.Call<List<Items>>,
-                response: retrofit2.Response<List<Items>>
-            ) {
+            override fun onResponse(call: Call<List<Items>>, response: Response<List<Items>>) {
                 if (response.isSuccessful) {
                     val b: List<Items>? = response.body()
                     itemsLiveData.postValue(b!!)
@@ -37,39 +36,54 @@ class ItemsRepository {
                 } else {
                     val message = response.code().toString() + " " + response.message()
                     errorMessageLiveData.postValue(message)
-                    Log.d("Line 42 errorcode", message)
+                    Log.d("Line 44 errorcode", message)
                 }
             }
 
-
-            override fun onFailure(call: retrofit2.Call<List<Items>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Items>>, t: Throwable) {
                 errorMessageLiveData.postValue(t.message)
-                Log.d("Line 49 errorcode", t.message!!)
+                Log.d("Line 52 errorcode", t.message!!)
             }
-
         })
     }
 
     fun add(items: Items) {
         itemsService.saveItem(items).enqueue(object : Callback<Items> {
-            override fun onResponse(
-                call: retrofit2.Call<Items>,
-                response: retrofit2.Response<Items>
-            ) {
+            override fun onResponse(call: Call<Items>, response: Response<Items>) {
                 if (response.isSuccessful) {
-                    Log.d("APPLE", "Added: " + response.body()) //TODO omskriv tag
+                    Log.d("APPLE", "Added: " + response.body())
                     updateMessageLiveData.postValue("Added: " + response.body())
                     getItems()
                 } else {
                     val message = response.code().toString() + " " + response.message()
                     errorMessageLiveData.postValue(message)
-                    Log.d("Line 69 errorcode", message)
+                    Log.d("Line 66 errorcode", message)
                 }
             }
 
-            override fun onFailure(call: retrofit2.Call<Items>, t: Throwable) {
+            override fun onFailure(call: Call<Items>, t: Throwable) {
                 errorMessageLiveData.postValue(t.message)
-                Log.d("APPLE", t.message!!) //TODO omskriv tag
+                Log.d("APPLE", t.message!!)
+            }
+        })
+    }
+
+    fun update(items: Items) {
+        itemsService.updateItem(items.id, items).enqueue(object : Callback<Items> {
+            override fun onResponse(call: Call<Items>, response: Response<Items>) {
+                if (response.isSuccessful) {
+                    Log.d("APPLE", "Updated: " + response.body())
+                    updateMessageLiveData.postValue("Updated: " + response.body())
+                } else {
+                    val message = response.code().toString() + " " + response.message()
+                    errorMessageLiveData.postValue(message)
+                    Log.d("APPLE", message)
+                }
+            }
+
+            override fun onFailure(call: Call<Items>, t: Throwable) {
+                errorMessageLiveData.postValue(t.message)
+                Log.d("APPLE", t.message!!)
             }
         })
     }
@@ -77,8 +91,8 @@ class ItemsRepository {
     fun delete(id: Int) {
         itemsService.deleteItem(id).enqueue(object : Callback<Items> {
             override fun onResponse(
-                call: retrofit2.Call<Items>,
-                response: retrofit2.Response<Items>
+                call: Call<Items>,
+                response: Response<Items>
             ) {
                 if (response.isSuccessful) {
                     Log.d("APPLE", "Updated: " + response.body()) //TODO omskriv tag
@@ -90,7 +104,7 @@ class ItemsRepository {
                 }
             }
 
-            override fun onFailure(call: retrofit2.Call<Items>, t: Throwable) {
+            override fun onFailure(call: Call<Items>, t: Throwable) {
                 errorMessageLiveData.postValue(t.message)
                 Log.d("APPLE", t.message!!) //TODO omskriv tag
             }
